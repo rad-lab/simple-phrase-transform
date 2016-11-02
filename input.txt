@@ -1,3 +1,2 @@
-a
-b
-bdfb
+search artists
+get an apple's colour

@@ -1,3 +1,4 @@
+from nltk import pos_tag, word_tokenize
 from simple_grammar import SimpleGrammar
 
 grammars = []
@@ -12,6 +13,7 @@ def init(grammar_strings):
 
 def transform(phrase):
     results = []
+    phrase_tags = __get_tags(phrase)
     raise NotImplementedError()
     return results
 
@@ -26,4 +28,11 @@ def transform_batch(phrase_list):
 
 
 def __get_tags(phrase):
-    pass
+    tags = pos_tag(word_tokenize(phrase))
+
+    # Exceptions occur
+    command_verbs = ['find', 'fetch', 'search', 'buy', 'get', 'create', 'delete', 'discover', 'check', 'request']
+    if tags[0][1] != 'VB' and tags[0][0] in command_verbs:
+        tags[0] = (tags[0][0], 'VB')
+
+    return tags
