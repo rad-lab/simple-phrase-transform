@@ -38,7 +38,7 @@ class SimpleGrammar(object):
             if req_key not in available_words:
                 return False
 
-            elif req_amount < len(available_words[req_key]):
+            elif req_amount > len(available_words[req_key]):
                 return False
 
         return True
