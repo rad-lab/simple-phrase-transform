@@ -14,22 +14,22 @@ class SimpleGrammar(object):
             split = element.split('[')
             tag = split[0]
             split = split[1].split(']')[0].split(',')
-            min = int(split[0])
+            min_elements = int(split[0])
             if split[1] == '*':
-                max = None
+                max_elements = None
             else:
-                max = int(split[1])
+                max_elements = int(split[1])
 
             self.structure.append({
                 'tag': tag,
-                'min': min,
-                'max': max
+                'min': min_elements,
+                'max': max_elements
             })
 
             if tag in self.requirements:
-                self.requirements[tag] += min
+                self.requirements[tag] += min_elements
             else:
-                self.requirements[tag] = min
+                self.requirements[tag] = min_elements
 
 
     def generate_from(self, tags):
