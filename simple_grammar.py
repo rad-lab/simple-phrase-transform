@@ -31,6 +31,36 @@ class SimpleGrammar(object):
             else:
                 self.requirements[tag] = min_elements
 
+    def __meets_requirements(self, available_words):
+        for req_key in self.requirements.keys():
+            req_amount = self.requirements[req_key]
+
+            if req_key not in available_words:
+                return False
+
+            elif req_amount < len(available_words[req_key]):
+                return False
+
+        return True
+
+    @staticmethod
+    def __get_available_words_from_tags(tags):
+        available = {}
+        for tag_tuple in tags:
+            word = tag_tuple[0]
+            tag = tag_tuple[1]
+            if tag not in available:
+                available[tag] = []
+
+            available[tag].append(word)
+        return available
 
     def generate_from(self, tags):
-        pass
+        available = self.__get_available_words_from_tags(tags)
+
+        # Does not meet these rule's requirements
+        if not self.__meets_requirements(available):
+            return []
+
+        # If it does meet requirements, do permutations
+        return []

@@ -17,7 +17,8 @@ def transform(phrase):
     for grammar in grammars:
         sub_results = grammar.generate_from(phrase_tags)
         for sub_result in sub_results:
-            results.append(sub_result)
+            if phrase != sub_result:
+                results.append(sub_result)
     return results
 
 
@@ -37,5 +38,14 @@ def __get_tags(phrase):
     command_verbs = ['find', 'fetch', 'search', 'buy', 'get', 'create', 'delete', 'discover', 'check', 'request']
     if tags[0][1] != 'VB' and tags[0][0] in command_verbs:
         tags[0] = (tags[0][0], 'VB')
+
+    for index, tag_tuple in enumerate(tags):
+        tag = tag_tuple[1]
+        to_replace = None
+        if 'NN' in tag:
+            to_replace = 'NN'
+
+        if to_replace:
+            tags[index] = (tags[index][0], 'NN')
 
     return tags
