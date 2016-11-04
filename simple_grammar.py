@@ -1,3 +1,7 @@
+from itertools import permutations, product
+from copy import deepcopy
+
+
 class SimpleGrammar(object):
 
     def __init__(self, grammar_string):
@@ -43,6 +47,9 @@ class SimpleGrammar(object):
 
         return True
 
+    def __remove_duplciates_from_list(self, collection):
+        return list(set(collection))
+
     @staticmethod
     def __get_available_words_from_tags(tags):
         available = {}
@@ -55,6 +62,44 @@ class SimpleGrammar(object):
             available[tag].append(word)
         return available
 
+    def __generate_from_subset(self, subset, structure_index=0):
+        if structure_index == len(self.structure):
+            return [""]
+
+        results = []
+
+        structural_element = self.structure[structure_index]
+
+        structural_element_max = structural_element['max']
+        if structural_element_max is None:
+            structural_element_max = len(subset[structural_element['tag']])
+
+        index = structural_element['min']
+
+        accumulated_words = ""
+
+        working_subset = deepcopy(subset)
+
+        while index <= structural_element_max:
+            # Range of how many words I can include here
+
+            if index > 0 and len(working_subset[structural_element['tag']]) > 0:
+                accumulated_words += (" " + working_subset[structural_element['tag']].pop(0))
+
+            returned_results = self.__generate_from_subset(working_subset, structure_index + 1)
+            for returned_result in returned_results:
+                results.append(accumulated_words + returned_result)
+
+            index += 1
+
+        return results
+
+    def __fix_result(self, phrase):
+        phrase = phrase.strip()
+        phrase = phrase.replace(" 's", "'s")
+        phrase = phrase.replace("  ", " ")
+        return phrase
+
     def generate_from(self, tags):
         available = self.__get_available_words_from_tags(tags)
 
@@ -63,4 +108,31 @@ class SimpleGrammar(object):
             return []
 
         # If it does meet requirements, do permutations
-        return []
+        productable = []
+
+        for key in available.keys():
+            available[key] = list(permutations(available[key]))
+            tuples = []
+            for a_tuple in available[key]:
+                tuples.append(list(a_tuple))
+
+            available[key] = tuples
+            productable.append(tuples)
+
+        results = []
+        productable = product(*productable)
+        productable = list(productable)
+        available_keys = list(available.keys())
+        for producted in productable:
+            working_subset = {}
+            for idx, sub_product in enumerate(producted):
+                working_subset[available_keys[idx]] = list(sub_product)
+
+            sub_results = self.__generate_from_subset(working_subset)
+            for sub_result in sub_results:
+                sub_result = self.__fix_result(sub_result)
+
+                results.append(sub_result)
+
+        results = self.__remove_duplciates_from_list(results)
+        return results
