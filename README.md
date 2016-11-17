@@ -1,5 +1,5 @@
-# transformational-grammar
-Generates new sentences based on existing ones using  transformational grammar
+# simple-phrase-transform
+Generates new sentences based on existing ones using simplified grammatical rules.
 
 To run use python 3: 
 
