@@ -4,7 +4,7 @@ Generates new sentences based on existing ones using simplified grammatical rule
 To run use python 3: 
 
 ```
-python main.py -i [input_file] -g [grammars_file] -o [output_file]
+python main.py -i [input_file] -g [grammar_rules_file] -o [output_file]
 ```
 
 For example:
