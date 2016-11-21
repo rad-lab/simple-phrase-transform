@@ -1,2 +1,46 @@
-search artists
-get an apple's colour
+get a venue
+search for venues by their name
+discover venue categories
+discover trending venues by location
+discover venue events
+get a venue's opening and popular hours
+get a venue's photos
+discover similar venues
+get an event's details
+create an event
+discover hotels
+get a hotel's itinerary and pricing
+get U2's upcoming events
+get a band's upcoming events
+check Two Door Cinema Club's past events
+check a music band's past events
+search for upcoming concerts by the band's name
+search for upcoming concerts
+get a concert's setlist
+get a concert's venue
+get a venue's musical events
+get a city's upcoming events
+search bands by name
+search venues by name
+search cities by name
+get music albums
+get a music album
+get an album's songs
+search for music
+get a music group's details
+get music groups
+get Michael Jackson's albums
+get a music group's albums
+get John Frusciante's best songs
+get a band's best songs
+discover similar bands
+get a song
+get songs
+get featured music playlists
+get new music albums
+get an estimate for a taxi
+get taxi companies
+get a price estimation for a ride
+get a time estimation for a ride
+request an uber ride
+get an estimation for a ride
