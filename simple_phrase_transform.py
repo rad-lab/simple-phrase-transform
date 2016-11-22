@@ -14,6 +14,7 @@ def init(grammar_strings):
 def transform(phrase):
     results = []
     phrase_tags = __get_tags(phrase)
+    results.append('Original: ' + phrase)
     for grammar in grammars:
         sub_results = grammar.generate_from(phrase_tags)
         for sub_result in sub_results:
@@ -28,6 +29,7 @@ def transform_batch(phrase_list):
         sub_results = transform(phrase)
         for sub_result in sub_results:
             results.append(sub_result)
+        results.append('------------------')
     return results
 
 
