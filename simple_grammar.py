@@ -39,11 +39,12 @@ class SimpleGrammar(object):
         for req_key in self.requirements.keys():
             req_amount = self.requirements[req_key]
 
-            if req_key not in available_words:
-                return False
+            if req_amount > 0:
+                if req_key not in available_words:
+                    return False
 
-            elif req_amount > len(available_words[req_key]):
-                return False
+                elif req_amount > len(available_words[req_key]):
+                    return False
 
         return True
 
@@ -72,7 +73,10 @@ class SimpleGrammar(object):
 
         structural_element_max = structural_element['max']
         if structural_element_max is None:
-            structural_element_max = len(subset[structural_element['tag']])
+            if structural_element['tag'] in subset.keys():
+                structural_element_max = len(subset[structural_element['tag']])
+            else:
+                structural_element_max = 0
 
         index = structural_element['min']
 
@@ -83,8 +87,9 @@ class SimpleGrammar(object):
         while index <= structural_element_max:
             # Range of how many words I can include here
 
-            if index > 0 and len(working_subset[structural_element['tag']]) > 0:
-                accumulated_words += (" " + working_subset[structural_element['tag']].pop(0))
+            if structural_element['tag'] in working_subset.keys():
+                if index > 0 and len(working_subset[structural_element['tag']]) > 0:
+                    accumulated_words += (" " + working_subset[structural_element['tag']].pop(0))
 
             returned_results = self.__generate_from_subset(working_subset, structure_index + 1)
             for returned_result in returned_results:
